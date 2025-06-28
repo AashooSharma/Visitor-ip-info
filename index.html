@@ -60,3 +60,33 @@
   </script>
 </body>
 </html>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Visitor Info in JS</title>
+</head>
+<body>
+  <h2>Visitor Information</h2>
+  <p><strong>User Agent:</strong> <span id="ua"></span></p>
+  <p><strong>Platform (OS):</strong> <span id="os"></span></p>
+  <p><strong>Browser:</strong> <span id="browser"></span></p>
+
+  <script>
+    const ua = navigator.userAgent;
+    document.getElementById("ua").innerText = ua;
+    document.getElementById("os").innerText = navigator.platform;
+
+    function getBrowserName(ua) {
+      if (ua.includes("Firefox")) return "Firefox";
+      if (ua.includes("OPR") || ua.includes("Opera")) return "Opera";
+      if (ua.includes("Edg")) return "Edge";
+      if (ua.includes("Chrome")) return "Chrome";
+      if (ua.includes("Safari")) return "Safari";
+      if (ua.includes("Trident") || ua.includes("MSIE")) return "Internet Explorer";
+      return "Unknown";
+    }
+
+    document.getElementById("browser").innerText = getBrowserName(ua);
+  </script>
+</body>
+</html>
