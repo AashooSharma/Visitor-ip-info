@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Visitor Info</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #f0f2f5;
+      color: #333;
+    }
+    .info {
+      background: #fff;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    h2 {
+      margin-top: 0;
+    }
+    .label {
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h2>Visitor Information</h2>
+  <div id="info" class="info">Loading visitor info...</div>
+
+  <script>
+    fetch('http://ip-api.com/json/?fields=status,message,query,continent,continentCode,country,countryCode,region,regionName,city,district,zip,lat,lon,timezone,isp,org,as,asname,reverse,mobile,proxy,hosting')
+      .then(res => res.json())
+      .then(data => {
+        if (data.status === "success") {
+          document.getElementById("info").innerHTML = `
+            <p><span class="label">IP:</span> ${data.query}</p>
+            <p><span class="label">Country:</span> ${data.country} (${data.countryCode})</p>
+            <p><span class="label">Region:</span> ${data.regionName} (${data.region})</p>
+            <p><span class="label">City:</span> ${data.city}</p>
+            <p><span class="label">ZIP:</span> ${data.zip}</p>
+            <p><span class="label">Latitude:</span> ${data.lat}</p>
+            <p><span class="label">Longitude:</span> ${data.lon}</p>
+            <p><span class="label">Timezone:</span> ${data.timezone}</p>
+            <p><span class="label">ISP:</span> ${data.isp}</p>
+            <p><span class="label">Organization:</span> ${data.org}</p>
+            <p><span class="label">AS Name:</span> ${data.asname}</p>
+            <p><span class="label">Mobile:</span> ${data.mobile}</p>
+            <p><span class="label">Proxy:</span> ${data.proxy}</p>
+            <p><span class="label">Hosting:</span> ${data.hosting}</p>
+          `;
+        } else {
+          document.getElementById("info").innerText = `Error: ${data.message}`;
+        }
+      })
+      .catch(err => {
+        document.getElementById("info").innerText = "Failed to fetch visitor information.";
+        console.error(err);
+      });
+  </script>
+</body>
+</html>
